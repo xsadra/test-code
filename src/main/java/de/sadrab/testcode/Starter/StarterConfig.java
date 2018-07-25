@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class StarterConfig {
+    public StarterConfig(RestTemplate rest) {
+        this.rest = rest;
+    }
+
     private RestTemplate rest;
 
     @Value("${baseUrl.v1}")
@@ -35,8 +39,14 @@ public class StarterConfig {
                 String response1 = sendRequest(v1Url, requestData);
                 String response2 = sendRequest(v2Url, requestData);
 
-                System.out.println(response1);
-                System.out.println(response2);
+                //System.out.println(response1);
+                //System.out.println(response2);
+
+                String message = (response1.equalsIgnoreCase(response2)) ?
+                        (" == With [" + requestData + "] have identical output. ==") :
+                        " ## With [" + requestData + "] have different output. ##";
+
+                System.out.println(message);
             });
 
 
